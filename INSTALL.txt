@@ -1,0 +1,3 @@
+sudo /anaconda/envs/py35/bin/pip install bcolz
+sudo apt-get install ffmpeg
+

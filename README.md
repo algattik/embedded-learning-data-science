@@ -33,6 +33,8 @@ This is my work in progress to demonstrate how to use Keras and ELL to recognize
 
 At this time I get an error when trying to use the resulting model in ELL:
 
+### Using Keras
+
 ```
 Constructing equivalent ELL layers from CNTK...
 Converting layer  Convolution(ParameterTensor[64,3,3,3], Tensor[3,224,224]) -> Tensor[64,224,224]
@@ -58,4 +60,21 @@ Traceback (most recent call last):
   File "modelHelper.py", line 95, in save_ell_predictor_to_file
     ell_map.Save(filePath)
 AttributeError: 'NoneType' object has no attribute 'Save'
+```
+
+### Using CNTK
+
+```
+  File "./../../../../build/tools/importers/CNTK/cntk_to_ell.py", line 863, in predictor_from_cntk_model
+    layersToConvert = get_filtered_layers_list(modelLayers)
+  File "./../../../../build/tools/importers/CNTK/cntk_to_ell.py", line 793, in get_filtered_layers_list
+    currentLayer.ell_inputPaddingParameters = get_input_padding_parameters_for_layer(currentLayer)
+  File "./../../../../build/tools/importers/CNTK/cntk_to_ell.py", line 678, in get_input_padding_parameters_for_layer
+    inputParameter, weightsParameter, binarized = get_convolutional_layer_info(layer)
+  File "./../../../../build/tools/importers/CNTK/cntk_to_ell.py", line 239, in get_convolutional_layer_info
+    weightsParameter = findParameterByName(layer.parameters, 'W', 0)
+  File "./../../../../build/tools/importers/CNTK/cntk_to_ell.py", line 80, in findParameterByName
+    return parameters[index]
+IndexError: tuple index out of range
+
 ```

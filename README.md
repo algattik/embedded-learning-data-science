@@ -21,60 +21,12 @@ This is my work in progress to demonstrate how to use Keras and ELL to recognize
 
 * Open Jupyter in a web browser, at the URL https://<VM DNS name or IP Address>:8000/
 
-* Run the 2 notebooks
-
-* Download the drink.model file
-
-* Compile the model using ELL
-
-
+* Run the 3 notebooks
 
 ## Issues
 
-At this time I get an error when trying to use the resulting model in ELL:
-
-### Using Keras
+At this time I can run the ELL model on the Linux server, but compilation on Raspberry Pi fails with:
 
 ```
-Constructing equivalent ELL layers from CNTK...
-Converting layer  Convolution(ParameterTensor[64,3,3,3], Tensor[3,224,224]) -> Tensor[64,224,224]
-Error occurred attempting to convert cntk layers to ELL layers
-Traceback (most recent call last):
-  File "./../../../../build/tools/importers/CNTK\cntk_to_ell.py", line 867, in predictor_from_cntk_model
-    ellLayers = convert_cntk_layers_to_ell_layers(layersToConvert)
-  File "./../../../../build/tools/importers/CNTK\cntk_to_ell.py", line 635, in convert_cntk_layers_to_ell_layers
-    process_binary_convolutional_layer(cntkLayer, ellLayers)
-  File "./../../../../build/tools/importers/CNTK\cntk_to_ell.py", line 337, in process_binary_convolutional_layer
-    raise NotImplementedError("Error: Not yet implemented")
-NotImplementedError: Error: Not yet implemented
-Error occurrred attempting to wrap ELL predictor in ELL model
-Traceback (most recent call last):
-  File "./../../../../build/interfaces/python/utilities\ell_utilities.py", line 22, in ell_map_from_float_predictor
-    shape = predictor.GetInputShape()
-AttributeError: 'NoneType' object has no attribute 'GetInputShape'
-Traceback (most recent call last):
-  File "drinks.py", line 68, in <module>
-    main()
-  File "drinks.py", line 29, in main
-    helper.save_ell_predictor_to_file(model, "vgg16ImageNet.map")
-  File "modelHelper.py", line 95, in save_ell_predictor_to_file
-    ell_map.Save(filePath)
-AttributeError: 'NoneType' object has no attribute 'Save'
-```
-
-### Using CNTK
-
-```
-  File "./../../../../build/tools/importers/CNTK/cntk_to_ell.py", line 863, in predictor_from_cntk_model
-    layersToConvert = get_filtered_layers_list(modelLayers)
-  File "./../../../../build/tools/importers/CNTK/cntk_to_ell.py", line 793, in get_filtered_layers_list
-    currentLayer.ell_inputPaddingParameters = get_input_padding_parameters_for_layer(currentLayer)
-  File "./../../../../build/tools/importers/CNTK/cntk_to_ell.py", line 678, in get_input_padding_parameters_for_layer
-    inputParameter, weightsParameter, binarized = get_convolutional_layer_info(layer)
-  File "./../../../../build/tools/importers/CNTK/cntk_to_ell.py", line 239, in get_convolutional_layer_info
-    weightsParameter = findParameterByName(layer.parameters, 'W', 0)
-  File "./../../../../build/tools/importers/CNTK/cntk_to_ell.py", line 80, in findParameterByName
-    return parameters[index]
-IndexError: tuple index out of range
-
+/usr/bin/ld: BFD (GNU Binutils for Raspbian) 2.25 assertion fail ../../bfd/elf32-arm.c:7827
 ```
